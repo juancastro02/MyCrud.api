@@ -19,6 +19,7 @@ db.connect(function (err) {
 
 //importing routes
 const user = require('./src/routes/user')
+const product = require('./src/routes/product')
 
 
 
@@ -37,6 +38,7 @@ app.use(morgan('dev'))
 
 //routes
 app.use('/user', user)
+app.use('/product', product)
 
 // starting the server
 app.listen( app.get('port'), () => {

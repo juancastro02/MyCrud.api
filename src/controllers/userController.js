@@ -42,3 +42,27 @@ exports.loginUser = (req, res) => {
     })
 
 }
+
+
+exports.CreateAdmin = (req, res) => {
+    
+    const { email, password, passwordConfirm } = req.body
+    db.query('SELECT * FROM user WHERE email =?', [email], (err, result) => {
+        if(err) return res.status(500).json({message: 'Hubo un error'})
+        if(result.length > 0) return res.status(400).json({ message: 'Email existente' })
+        if( password != passwordConfirm ) return res.status(400).json({ message: 'Las contraseñas no coinciden' }) 
+
+        let HashedPass = bcrypt.hash(password, 8)
+        .then((pass) => {
+            db.query('INSERT INTO user SET?', {email, password_hash: pass, admin: 1 }, (error, resultado) => {
+                if(error) return res.status(500).json({ message: 'Hubo un error' })
+                if(resultado) return res.status(200).json({ message: 'Usuario creado exitosamente' })
+            })
+        })
+        .catch((error) => {
+            if(error) return res.status(500).json({ message: 'Hubo un error' })
+        })
+   
+    })
+
+}
