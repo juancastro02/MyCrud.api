@@ -6,6 +6,7 @@ require('dotenv').config({ path: "./.env" })
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
+app.set('port', process.env.PORT || 4000)
 
 // connection with database 
 db.connect(function (err) {
@@ -22,14 +23,30 @@ const user = require('./src/routes/user')
 const product = require('./src/routes/product')
 
 
-
 //settings
-app.set('port', process.env.PORT || 3000)
+
+const config = {
+    application: {
+        cors: {
+            server: [
+                {
+                    origin: "localhost:3000", //servidor que deseas que consuma o (*) en caso que sea acceso libre
+                    credentials: true
+                }
+            ]
+        } 
+    }
+}
+
+
+app.use(cors(
+    config.application.cors.server
+  ));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.set('trust proxy', true);
-app.set(cors())
+
 
 
 //middlewares 

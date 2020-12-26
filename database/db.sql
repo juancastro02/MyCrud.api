@@ -19,8 +19,9 @@ CREATE TABLE productos (
     descripcion VARCHAR(200) NOT NULL,
     valor INT(10) NOT NULL,
     tipo_moneda VARCHAR(10) NOT NULL,
-    categoria VARCHAR(30)
-)
+    categoria VARCHAR(30),
+    imagen VARCHAR(400)
+);
 
 -- to show tables 
 SHOW TABLES;

@@ -6,7 +6,7 @@ exports.createProduct = (req, res) => {
 
     let valorMoneda;
 
-    const { nombre, descripcion, valor, tipo_moneda, categoria } = req.body
+    const { nombre, descripcion, valor, tipo_moneda, categoria, imagen } = req.body
 
     fetch('https://api.exchangeratesapi.io/latest')
     .then(res => res.json())
@@ -17,7 +17,7 @@ exports.createProduct = (req, res) => {
        if( tipo_moneda == 'USD' )  valorMoneda = valor
        if( tipo_moneda == 'EUR' )  valorMoneda = Math.round((valor / valorEuro + Number.EPSILON) * 100) / 100 
 
-       db.query('INSERT INTO productos SET?', { nombre, descripcion, valor: valorMoneda, tipo_moneda, categoria }, (err, result) => {
+       db.query('INSERT INTO productos SET?', { nombre, descripcion, valor: valorMoneda, tipo_moneda, categoria, imagen }, (err, result) => {
            if(err) return res.status(400).json({ message: 'Hubo un error al crear el producto' })
            if(result) return res.status(200).json({ message: 'Producto creado exitosamente' })
        })
@@ -57,7 +57,7 @@ exports.updateProduct = (req, res) => {
 
     let valorMoneda;
 
-    const { nombre, descripcion, valor, tipo_moneda, categoria } = req.body
+    const { nombre, descripcion, valor, tipo_moneda, categoria, imagen } = req.body
 
     fetch('https://api.exchangeratesapi.io/latest')
     .then(res => res.json())
@@ -68,7 +68,7 @@ exports.updateProduct = (req, res) => {
        if( tipo_moneda == 'USD' )  valorMoneda = valor
        if( tipo_moneda == 'EUR' )  valorMoneda = Math.round((valor / valorEuro + Number.EPSILON) * 100) / 100 
 
-       db.query(`UPDATE productos SET? WHERE id = ${ id }`, { nombre, descripcion, valor: valorMoneda, tipo_moneda, categoria }, (err, result) => {
+       db.query(`UPDATE productos SET? WHERE id = ${ id }`, { nombre, descripcion, valor: valorMoneda, tipo_moneda, categoria, imagen }, (err, result) => {
            if(err) return res.status(400).json({ message: 'Hubo un error al modificar el producto' })
            if(result) return res.status(200).json({ message: 'Producto modificado exitosamente' })
        })
