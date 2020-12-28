@@ -1,5 +1,6 @@
 const {db} = require('../../db')
 const bcrypt = require("bcryptjs");
+require('dotenv').config({ path: "../../.env" })
 const generateToken = require('../../utilities/generateToken')
 const nodemailer = require('nodemailer')
 
@@ -57,7 +58,7 @@ exports.CreateAdmin = (req, res) => {
         .then((pass) => {
             db.query('INSERT INTO user SET?', {email, password_hash: pass, admin: 1 }, (error, resultado) => {
                 if(error) return res.status(500).json({ message: 'Hubo un error' })
-                if(resultado) return res.status(200).json({ message: 'Usuario creado exitosamente' })
+                if(resultado) return res.status(200).json({ message: 'Administrador creado exitosamente' })
             })
         })
         .catch((error) => {
@@ -80,8 +81,8 @@ exports.ForgotPass = (req, res) => {
             let trasporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {
-                    user: "testjuancastro@gmail.com",
-                    pass: 'test1234*'
+                    user: process.env.EMAIL,
+                    pass: process.env.PASS
                 }
                
             })
@@ -96,7 +97,7 @@ exports.ForgotPass = (req, res) => {
             }
         
             trasporter.sendMail( mailOptions, (error, resultado) =>{
-                console.log(error)
+                
                 if(error) return res.status(400).json({message: error})
                 if(resultado) return res.status(200).json({message: 'Mail enviado'})
             })
@@ -120,7 +121,7 @@ exports.resetPass = (req, res) => {
             let hashedPassword = bcrypt.hash(password, 8)
             .then((NewPass) => {
                 db.query(`UPDATE user SET? WHERE id = ${ id } `, {password_hash: NewPass}, (error, result) => {
-                    console.log(error)
+                    
                      if (error) return res.status(400).json({message: 'La contraseña no es valida'})
                      if (result) {
                          return res.status(200).json({message: 'Contraseña cambiada exitosamente'})

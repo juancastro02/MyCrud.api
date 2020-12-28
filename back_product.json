@@ -1,0 +1,27 @@
+{
+    "Trae todos los productos -> GET http://localhost:4000/product": {
+
+    },
+    "Trae los datos de un solo producto -> GET http://localhost:4000/product/:id ": { 
+
+    },
+    "Crear productos -> POST http://localhost:4000/product": {
+        "valor": 20,
+        "tipo_moneda": "EUR",
+        "descripcion": "Anana fresca importada",
+        "nombre": "Anana",
+        "categoria": "Fruta",
+        "imagen": "https://servialgusto.com/wp-content/uploads/2020/10/4013-600x600.jpg"
+    },
+    "Modificar un producto -> PUT http://localhost:4000/product/:id": {
+        "valor": 40,
+        "tipo_moneda": "USD",
+        "descripcion": "Anana importada",
+        "nombre": "Anana",
+        "categoria": "Fruta",
+        "imagen": "https://servialgusto.com/wp-content/uploads/2020/10/4013-600x600.jpg"
+    },
+    "Eliminar un producto -> DELETE http://localhost:4000/product/:id": {
+        
+    }
+}
