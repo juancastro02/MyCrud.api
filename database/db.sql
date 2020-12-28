@@ -20,12 +20,12 @@ CREATE TABLE productos (
     valor INT(10) NOT NULL,
     tipo_moneda VARCHAR(10) NOT NULL,
     categoria VARCHAR(30),
-    imagen VARCHAR(400)
+    imagen VARCHAR(2000)
 );
 
 -- to show tables 
 SHOW TABLES;
 
--- to describe the table
+-- to describe the table 
 describe user;
 

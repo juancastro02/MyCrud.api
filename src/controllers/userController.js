@@ -35,8 +35,8 @@ exports.loginUser = (req, res) => {
         if (err || user.length == 0) return res.status(500).json({ message: "Error al obtener el usuario" });
 
         bcrypt.compare(password, user[0].password_hash, (err, result) => {
-
-            if(err) return res.status(400).json({ message: "Las contraseñas no coinciden" })
+            
+            if(result === false) return res.status(400).json({ message: "Las contraseña es incorrecta" })
             if(result) return generateToken(res, user[0].email, user[0].id, user[0].admin)
         })
 

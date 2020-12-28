@@ -11,7 +11,7 @@ exports.createProduct = (req, res) => {
     fetch('https://api.exchangeratesapi.io/latest')
     .then(res => res.json())
     .then(json =>  {
-
+ 
        let valorEuro = json.rates.USD
        
        if( tipo_moneda == 'USD' )  valorMoneda = valor
